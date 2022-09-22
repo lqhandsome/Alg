@@ -1,1 +1,1 @@
-module github.com/vearch/vearch
+module github.com/lqhandsome/Alg

@@ -1,11 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/awesee/php2go/php"
+)
 
 type A struct {
 
 }
 
 func main() {
-	fmt.Println("log Alg")
+
+fmt.Println(php.Md5("123"))
 }

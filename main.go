@@ -1,8 +1,7 @@
 package main
 
-type A struct {
-}
+import "fmt"
 
 func main() {
-
+	fmt.Println(1235)
 }

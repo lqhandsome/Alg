@@ -77,8 +77,8 @@ func QuickSort(arr []int,l,r int) {
 		}
 	}
 	//主元换到中间
-	arr[r] = arr[i]
-	arr[i] = pivot
+	arr[r],arr[i] = arr[i],pivot
+	//arr[i] = pivot
 
 	//arr[i],arr[r] = pivot,arr[i]
 fmt.Println(arr[i],i)

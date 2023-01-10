@@ -85,3 +85,31 @@ fmt.Println(arr[i],i)
 	QuickSort(arr,i+1,r)
 	QuickSort(arr,l,i-1)
 }
+
+// 冒泡排序
+func popSort(arr []int){
+	if len(arr) <2 {
+		return
+	}
+	for i:=0;i < len(arr);i++ {
+		for j :=0;j < len(arr)-i-1;j++{
+			if arr[j] > arr[j+1] {
+				arr[j],arr[j+1] = arr[j+1],arr[j]
+			}
+		}
+	}
+}
+
+//选择排序
+func selectSort(arr []int) {
+	if len(arr) <2 {
+		return
+	}
+	for i:=0;i < len(arr);i++ {
+		for j :=i+1;j < len(arr);j++{
+			if arr[i] > arr[j] {
+				arr[j],arr[i] = arr[i],arr[j]
+			}
+		}
+	}
+}

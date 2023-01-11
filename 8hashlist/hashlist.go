@@ -5,26 +5,26 @@ import (
 	"fmt"
 )
 
-func main() {
-	//fmt.Println(fmt.Println(string([]byte{97, 107, 87})))
-	hashList, e := getHashList(10)
-	if e != nil {
-		panic(e)
-	}
-	hashList.Set("a", 100)
-	hashList.Set("k", 200)
-	hashList.Set("W", 300)
-	hashList.Set("1", 111)
-	hashList.Set("2", 222)
-
-	//key := 'a' % 10
-	//fmt.Println(hashList.Delete("k"))
-	fmt.Println(hashList.Delete("a"))
-	fmt.Println(hashList.Get("W"))
-	fmt.Println(hashList.Get("W"))
-	fmt.Println(hashList.Get("1"))
-	fmt.Println(hashList.Get("2"))
-}
+//func main() {
+//	//fmt.Println(fmt.Println(string([]byte{97, 107, 87})))
+//	hashList, e := getHashList(10)
+//	if e != nil {
+//		panic(any(e))
+//	}
+//	hashList.Set("a", 100)
+//	hashList.Set("k", 200)
+//	hashList.Set("W", 300)
+//	hashList.Set("1", 111)
+//	hashList.Set("2", 222)
+//
+//	//key := 'a' % 10
+//	//fmt.Println(hashList.Delete("k"))
+//	fmt.Println(hashList.Delete("a"))
+//	fmt.Println(hashList.Get("W"))
+//	fmt.Println(hashList.Get("W"))
+//	fmt.Println(hashList.Get("1"))
+//	fmt.Println(hashList.Get("2"))
+//}
 
 type Node struct {
 	Key   string // Key

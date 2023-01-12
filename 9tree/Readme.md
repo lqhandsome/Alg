@@ -4,7 +4,7 @@
 - 高度
 ```text
 ```
-![树定义](https://github.com/lqhandsome/Alg/tree/master/image/树定义.png)
+![树定义](https://github.com/lqhandsome/Alg/blob/master/image/%E6%A0%91%E6%9C%AF%E8%AF%AD.png)
 - 深度
     `根节点到该节点所经历的边数`
 - 层

@@ -40,12 +40,44 @@ func main() {
 	c.Right = g
 
 	//a.PreOrderTraversal()
+	fmt.Print("先序遍历")
 	PreOrderTraversal(a)
 	fmt.Println()
+	fmt.Print("中序遍历")
 	InOrderTraversal(a)
 	fmt.Println()
+	fmt.Print("后序遍历")
 	PostOrderTraversal(a)
+	fmt.Println()
+	fmt.Print("非递归前序遍历")
+	beforeRangeTree(a)
+	fmt.Println()
 }
+
+//前序非递归遍历二叉树
+func beforeRangeTree(tree *TreeNode) {
+	if tree == nil {
+		return
+	}
+	//用一个切片模拟栈
+	stackArr := []*TreeNode{}
+	for tree != nil || len(stackArr) != 0{
+
+		if tree == nil {
+			// 如果节点为空，且堆栈中有数据，就弹出一个并遍历其右节点
+			if len(stackArr) != 0{
+				//fmt.Print(stackArr[len(stackArr)-1].Data,"-->") // 中序遍历
+				tree =stackArr[len(stackArr)-1].Right
+				stackArr = stackArr[:len(stackArr)-1]
+			}
+		}else {
+			fmt.Print(tree.Data,"-->") // 前序遍历
+			stackArr = append(stackArr,tree)
+			tree = tree.Left
+		}
+	}
+}
+
 
 // 添加一个节点
 func (p *TreeNode) AddChildNode(parent *TreeNode, child *TreeNode, left bool) {

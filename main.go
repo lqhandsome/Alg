@@ -1,20 +1,29 @@
 package main
 
 import (
-	"crypto/md5"
 	"fmt"
-	"time"
+	"sync"
 )
 
 func main() {
-	start := time.Now()
-	m := md5.New()
-	m.Write([]byte("hello"))
-	a := m.Sum(nil)
-	fmt.Printf("%x\r\n", a)
-	newMd := md5.New()
-	newMd.Reset()
-	md5String := fmt.Sprintf("%x", md5.Sum([]byte("今天我来讲哈希算法")))
-	fmt.Println((md5String), time.Until(start))
+	var (
+		slc = []int{}
+		n   = 100
+		wg  sync.WaitGroup
+	)
 
+	wg.Add(n)
+	for i := 0; i < n; i++ {
+		go func(i int) {
+			slc = append(slc, i)
+			println(slc)
+			println(&slc)
+			wg.Done()
+		}(i)
+	}
+	wg.Wait()
+	for _, v := range slc {
+		fmt.Println(v)
+	}
+	fmt.Println("done")
 }

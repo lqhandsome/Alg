@@ -75,6 +75,10 @@ func main() {
 	fmt.Println(cd.GetData(392))
 	fmt.Println(cd.GetData(388))
 	fmt.Println(cd.GetData(400))
+	fmt.Println(cd.DeleteData(2))
+	fmt.Println(cd.GetData(2))
+	fmt.Println(cd.GetData(3))
+	fmt.Println(cd.GetData(1))
 }
 func HashOne(key string) (hashKey uint, e error) {
 	if key == "" {
@@ -119,6 +123,21 @@ func GetConsistentHash(machines ...Machine) (ch *ConsistentHash, e error) {
 
 // AddMachine 添加机器
 func (p *ConsistentHash) AddMachine(machine Machine) error {
+	hashKey, e := p.MachineHashFunc(machine.ip)
+	if e != nil {
+		return e
+	}
+	if p.Node[hashKey] != nil {
+		fmt.Println("散列冲突", machine.ip, "已存在")
+		return errors.New("散列冲突，机器已存在")
+	}
+	p.Node[hashKey] = &machine
+
+	// 迁移数据
+	//Step 1 查找下一个节点
+	
+	//Step 2 遍历下一个节点上的数据，发现需要迁移迁移到新机器上
+
 	return nil
 }
 
@@ -134,14 +153,12 @@ func (p *ConsistentHash) AddData(data Data) error {
 	}
 	for _, v := range p.Node[dataHashKey:] {
 		if v != nil {
-			fmt.Println(v.ip)
 			v.Data = append(v.Data, data)
 			return nil
 		}
 	}
 	for _, v := range p.Node[0:dataHashKey] {
 		if v != nil {
-			fmt.Println(v.ip)
 			v.Data = append(v.Data, data)
 			return nil
 		}
@@ -155,7 +172,6 @@ func (p *ConsistentHash) GetData(key int) (value int, e error) {
 	}
 	for _, v := range p.Node[dataHashKey:] {
 		if v != nil {
-			fmt.Printf("数据在ip=%v上\r\n",v.ip)
 			for _, vv := range v.Data {
 				if vv.Key == key {
 					return vv.Value, nil
@@ -166,7 +182,6 @@ func (p *ConsistentHash) GetData(key int) (value int, e error) {
 	}
 	for _, v := range p.Node[:dataHashKey] {
 		if v != nil {
-			fmt.Printf("数据在ip=%v上\r\n",v.ip)
 			for _, vv := range v.Data {
 				if vv.Key == key {
 					return vv.Value, nil
@@ -178,6 +193,31 @@ func (p *ConsistentHash) GetData(key int) (value int, e error) {
 	}
 	return 0, errors.New("not found")
 }
-func (p *ConsistentHash) DeleteData(key string) error {
-	return nil
+func (p *ConsistentHash) DeleteData(key int) error {
+	dataHashKey, e := p.DataHashFunc(key)
+	if e != nil {
+		return e
+	}
+	for _, v := range p.Node[dataHashKey:] {
+		if v != nil {
+			for kk, vv := range v.Data {
+				if vv.Key == key {
+					v.Data = append(v.Data[0:kk], v.Data[kk+1:]...)
+					return nil
+				}
+			}
+			return errors.New("not found")
+		}
+	}
+	for _, v := range p.Node[:dataHashKey] {
+		if v != nil {
+			for kk, vv := range v.Data {
+				if vv.Key == key {
+					v.Data = append(v.Data[0:kk], v.Data[kk+1:]...)
+				}
+			}
+			return errors.New("not found")
+		}
+	}
+	return errors.New("not found")
 }

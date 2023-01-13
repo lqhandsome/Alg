@@ -52,6 +52,11 @@ func main() {
 	fmt.Print("非递归前序遍历")
 	beforeRangeTree(a)
 	fmt.Println()
+	fmt.Print("非递归后续遍历")
+	afterRangeTree(a)
+	fmt.Println()
+	fmt.Print("非递归层续遍历")
+	levelRangeTree(a)
 }
 
 //前序非递归遍历二叉树
@@ -61,23 +66,80 @@ func beforeRangeTree(tree *TreeNode) {
 	}
 	//用一个切片模拟栈
 	stackArr := []*TreeNode{}
-	for tree != nil || len(stackArr) != 0{
+	for tree != nil || len(stackArr) != 0 {
 
 		if tree == nil {
 			// 如果节点为空，且堆栈中有数据，就弹出一个并遍历其右节点
-			if len(stackArr) != 0{
+			if len(stackArr) != 0 {
 				//fmt.Print(stackArr[len(stackArr)-1].Data,"-->") // 中序遍历
-				tree =stackArr[len(stackArr)-1].Right
+				tree = stackArr[len(stackArr)-1].Right
 				stackArr = stackArr[:len(stackArr)-1]
 			}
-		}else {
-			fmt.Print(tree.Data,"-->") // 前序遍历
-			stackArr = append(stackArr,tree)
+		} else {
+			fmt.Print(tree.Data, "-->") // 前序遍历
+			stackArr = append(stackArr, tree)
 			tree = tree.Left
 		}
 	}
 }
+func afterRangeTree(tree *TreeNode) {
+	if tree == nil {
+		return
+	}
+	// 上一个访问的节点
+	var pre *TreeNode
+	//用一个切片模拟栈
+	stackArr := []*TreeNode{}
+	for tree != nil || len(stackArr) != 0 {
 
+		// 先将所有左子树压入
+		for tree != nil {
+			stackArr = append(stackArr, tree)
+			tree = tree.Left
+		}
+
+		// 弹出一个，这时候是第二次访问
+		if len(stackArr) != 0 {
+			tmp := stackArr[len(stackArr)-1]
+			tree = stackArr[len(stackArr)-1]
+
+			stackArr = stackArr[:len(stackArr)-1]
+			//如果当前节点没有右子树，或者当前节点的右子树刚刚访问过，就要打印
+			if tree.Right == nil || tree.Right == pre {
+				fmt.Print(tree.Data, "-->") // 后序遍历
+				tree = nil
+				pre = tmp
+			} else {
+				stackArr = append(stackArr, tree)
+				tree = tree.Right
+			}
+		}
+
+	}
+}
+
+func levelRangeTree(tree *TreeNode) {
+	if tree == nil {
+		return
+	}
+	//用一个切片模拟队列
+	stackArr := []*TreeNode{}
+	for tree != nil || len(stackArr) != 0 {
+		fmt.Print(tree.Data, "-->") // 后序遍历
+		if tree.Left != nil {
+			stackArr = append(stackArr, tree.Left)
+		}
+		if tree.Right != nil {
+			stackArr = append(stackArr, tree.Right)
+		}
+		if len(stackArr) != 0 {
+			tree = stackArr[0]
+			stackArr = stackArr[1:]
+		} else {
+			break
+		}
+	}
+}
 
 // 添加一个节点
 func (p *TreeNode) AddChildNode(parent *TreeNode, child *TreeNode, left bool) {

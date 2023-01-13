@@ -10,54 +10,54 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func main() {
-	a := &TreeNode{
-		Data: "A",
-	}
-	b := &TreeNode{
-		Data: "B",
-	}
-	c := &TreeNode{
-		Data: "C",
-	}
-	d := &TreeNode{
-		Data: "D",
-	}
-	e := &TreeNode{
-		Data: "E",
-	}
-	f := &TreeNode{
-		Data: "F",
-	}
-	g := &TreeNode{
-		Data: "G",
-	}
-	a.Left = b
-	a.Right = c
-	b.Left = d
-	b.Right = e
-	c.Left = f
-	c.Right = g
-
-	//a.PreOrderTraversal()
-	fmt.Print("先序遍历")
-	PreOrderTraversal(a)
-	fmt.Println()
-	fmt.Print("中序遍历")
-	InOrderTraversal(a)
-	fmt.Println()
-	fmt.Print("后序遍历")
-	PostOrderTraversal(a)
-	fmt.Println()
-	fmt.Print("非递归前序遍历")
-	beforeRangeTree(a)
-	fmt.Println()
-	fmt.Print("非递归后续遍历")
-	afterRangeTree(a)
-	fmt.Println()
-	fmt.Print("非递归层续遍历")
-	levelRangeTree(a)
-}
+//func main() {
+//	a := &TreeNode{
+//		Data: "A",
+//	}
+//	b := &TreeNode{
+//		Data: "B",
+//	}
+//	c := &TreeNode{
+//		Data: "C",
+//	}
+//	d := &TreeNode{
+//		Data: "D",
+//	}
+//	e := &TreeNode{
+//		Data: "E",
+//	}
+//	f := &TreeNode{
+//		Data: "F",
+//	}
+//	g := &TreeNode{
+//		Data: "G",
+//	}
+//	a.Left = b
+//	a.Right = c
+//	b.Left = d
+//	b.Right = e
+//	c.Left = f
+//	c.Right = g
+//
+//	//a.PreOrderTraversal()
+//	fmt.Print("先序遍历")
+//	PreOrderTraversal(a)
+//	fmt.Println()
+//	fmt.Print("中序遍历")
+//	InOrderTraversal(a)
+//	fmt.Println()
+//	fmt.Print("后序遍历")
+//	PostOrderTraversal(a)
+//	fmt.Println()
+//	fmt.Print("非递归前序遍历")
+//	beforeRangeTree(a)
+//	fmt.Println()
+//	fmt.Print("非递归后续遍历")
+//	afterRangeTree(a)
+//	fmt.Println()
+//	fmt.Print("非递归层续遍历")
+//	levelRangeTree(a)
+//}
 
 //前序非递归遍历二叉树
 func beforeRangeTree(tree *TreeNode) {
@@ -107,6 +107,7 @@ func afterRangeTree(tree *TreeNode) {
 			//如果当前节点没有右子树，或者当前节点的右子树刚刚访问过，就要打印
 			if tree.Right == nil || tree.Right == pre {
 				fmt.Print(tree.Data, "-->") // 后序遍历
+				// 因为此节点没有是返回上来的，已经访问过，所以需要置为nil
 				tree = nil
 				pre = tmp
 			} else {

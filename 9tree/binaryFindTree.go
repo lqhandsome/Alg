@@ -18,7 +18,7 @@ func newBinaryFindTree(data int) *BinaryFindTree {
 }
 
 func main() {
-	root := newBinaryFindTree(5)
+	root := newBinaryFindTree(7)
 	fmt.Println(root.AddNode(&BinaryFindTree{
 		Data: 10,
 	}))
@@ -28,16 +28,22 @@ func main() {
 	fmt.Println(root.AddNode(&BinaryFindTree{
 		Data: 5,
 	}))
+	fmt.Println(root.AddNode(&BinaryFindTree{
+		Data: 1,
+	}))
 	root.levelRangeTree()
 	fmt.Println()
 	root.inRangeTree()
 	fmt.Println()
+	newRoot, e := DeleteNode(root, 7)
+	if e != nil {
+		panic(e)
+	}
+	newRoot.levelRangeTree()
+	fmt.Println()
+	newRoot.inRangeTree()
+	fmt.Println()
 
-	fmt.Println(root.FindNode(1))
-	fmt.Println(root.FindNode(3))
-	fmt.Println(root.FindNode(5))
-	fmt.Println(root.FindNode(9))
-	fmt.Println(root.FindNode(10))
 }
 func (root *BinaryFindTree) inRangeTree() {
 	if root == nil {
@@ -111,11 +117,11 @@ func (root *BinaryFindTree) FindNode(data int) (*BinaryFindTree, error) {
 }
 
 //二叉查找树的删除
-func (root *BinaryFindTree) DeleteNode(data int) error {
+func DeleteNode(root *BinaryFindTree, data int) (*BinaryFindTree, error) {
 
 	if root == nil {
 		fmt.Println("root is nil")
-		return errors.New("root is nil")
+		return nil, errors.New("root is nil")
 	}
 	// 当前节点
 	p := root
@@ -134,7 +140,7 @@ func (root *BinaryFindTree) DeleteNode(data int) error {
 	// 退出条件是 p == nil
 	if p == nil {
 		fmt.Println("node not found")
-		return errors.New("node not found")
+		return nil, errors.New("node not found")
 	}
 
 	// 情况1 没有子节点
@@ -142,17 +148,28 @@ func (root *BinaryFindTree) DeleteNode(data int) error {
 		// 如果删除的是头结点
 		if pp == nil {
 			root.Data = 0
-			return nil
+			fmt.Println("删除的是头结点")
+			return nil, nil
 		}
 		if pp.LeftTree == p {
 			pp.LeftTree = p.LeftTree
 		} else {
 			pp.RightTree = p.LeftTree
 		}
+		return root, nil
 	}
 
 	//情况2 有且只有一个节点
 	if (p.RightTree != nil && p.LeftTree == nil) || p.RightTree == nil && p.LeftTree != nil {
+		if pp == nil {
+			root.Data = 0
+			fmt.Println("删除的是头结点")
+			if root.LeftTree == nil {
+				return root.RightTree, nil
+			} else {
+				return root.LeftTree, nil
+			}
+		}
 		if p.LeftTree != nil {
 			if pp.LeftTree == p {
 				pp.LeftTree = p.LeftTree
@@ -166,8 +183,40 @@ func (root *BinaryFindTree) DeleteNode(data int) error {
 				pp.RightTree = p.RightTree
 			}
 		}
+		return root, nil
 	}
-
 	//情况3 有两个节点
-	return nil
+	if p.RightTree != nil && p.LeftTree != nil {
+		if pp == nil {
+			fmt.Println("删除的是头结点")
+			minTree := p.RightTree
+			minTreePP := p
+			for minTree.LeftTree != nil {
+				minTreePP = minTree
+				minTree = minTree.LeftTree
+			}
+			minTreePP.RightTree = minTree.RightTree
+			minTree.LeftTree = p.LeftTree
+			minTree.RightTree = p.RightTree
+			p.Data = minTree.Data
+			return root, nil
+		}
+		minTree := p.RightTree
+		minTreePP := p
+		for minTree.LeftTree != nil {
+			minTreePP = minTree
+			minTree = minTree.LeftTree
+		}
+		minTreePP.RightTree = minTree.RightTree
+		minTree.LeftTree = p.LeftTree
+		minTree.RightTree = p.RightTree
+		if pp.LeftTree == p {
+			pp.LeftTree = minTree
+		} else {
+			pp.RightTree = minTree
+		}
+
+		return root, nil
+	}
+	return nil, fmt.Errorf("unknown error")
 }

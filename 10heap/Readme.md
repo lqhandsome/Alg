@@ -25,3 +25,7 @@
 ```
 ![建堆](https://static001.geekbang.org/resource/image/50/1e/50c1e6bc6fe68378d0a66bdccfff441e.jpg?wh=1142*807)
 ![建堆](https://static001.geekbang.org/resource/image/aa/9d/aabb8d15b1b92d5e040895589c60419d.jpg?wh=1142*856)
+
+#### 堆得典型应用
+- 优先级队列
+- TopK 问题 

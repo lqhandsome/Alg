@@ -3,9 +3,12 @@ package main
 import "fmt"
 
 func main() {
-	manStr := "abcdefg"
+	manStr := "aaaaaba"
 	//return
-	fmt.Println(BMStringMatch(manStr, "fg"))
+	fmt.Println(BMStringMatch(manStr, "ba"))
+	fmt.Println(BMStringMatch(manStr, "a"))
+	fmt.Println(BMStringMatch(manStr, "b"))
+	fmt.Println(BMStringMatch(manStr, "ab"))
 }
 
 // 坏字符串和索引映射
@@ -24,7 +27,6 @@ func bm(str string) map[byte]int {
 func BMStringMatch(manStr string, str string) int {
 	bm := bm(str)
 	for i := 0; i <= len(manStr)-len(str); {
-
 		// 匹配
 		var j int
 		for j = len(str) - 1; j >= 0; j-- {
@@ -39,10 +41,13 @@ func BMStringMatch(manStr string, str string) int {
 		}
 		// 在模式串中可以匹配到坏字符串
 		if v, ok := bm[manStr[j+i]]; ok {
-			i = i + (j - v)
+			if (j - v) > 0 {
+				i = i + (j - v)
+			} else {
+				i++
+			}
 		} else {
 			i++
-			fmt.Println("i++++", i)
 		}
 
 	}

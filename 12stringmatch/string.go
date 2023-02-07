@@ -41,6 +41,7 @@ func BMStringMatch(manStr string, str string) int {
 		}
 		// 在模式串中可以匹配到坏字符串
 		if v, ok := bm[manStr[j+i]]; ok {
+			// 如果倒着滑动，强制往前滑
 			if (j - v) > 0 {
 				i = i + (j - v)
 			} else {
@@ -49,7 +50,6 @@ func BMStringMatch(manStr string, str string) int {
 		} else {
 			i++
 		}
-
 	}
 	return -1
 }

@@ -40,4 +40,4 @@ AC 自动机就是为了解决这种问题，当一次匹配失败后，AC自动
 然后在这个字符串上找到可以在tiretree上匹配到的m最长前缀，
 然后拿到这个最长前缀在tiretree可以匹配到的字符串的末尾开始匹配；
 ```
-![匹配失败后的实效]('failnext.png')
+![匹配失败后的实效](https://github.com/lqhandsome/Alg/blob/master/13tiretree/failnext.png)

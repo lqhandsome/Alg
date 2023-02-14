@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type AcNode struct {
 	data    byte        // 当前节点数据
@@ -44,7 +47,12 @@ func (p *AcNode) LevelRange() {
 	for len(arr) > 0 {
 		tmp := arr[0]
 		arr = arr[1:]
-		fmt.Print(string(tmp.data), tmp.isEnd, tmp.length, "-->")
+		if tmp.FailPtr == nil {
+			fmt.Printf("data: %v,isEnd: %v,length: %v,FailPrt.data: %v,%v", string(tmp.data), tmp.isEnd, tmp.length, "null", "-->")
+		} else {
+			fmt.Printf("data: %v,isEnd: %v,length: %v,FailPrt.data: %v,%v", string(tmp.data), tmp.isEnd, tmp.length, string(tmp.FailPtr.data), "-->")
+		}
+		fmt.Println()
 		for _, v := range tmp.Child {
 			if v != nil {
 				arr = append(arr, v)
@@ -55,7 +63,7 @@ func (p *AcNode) LevelRange() {
 }
 
 // 构建失败指针
-func (p *AcNode) FailNext() (e error) {
+func (p *AcNode) ConstructFailNext() (e error) {
 	root := p
 	// 模拟队列
 	var queue []*AcNode
@@ -63,36 +71,55 @@ func (p *AcNode) FailNext() (e error) {
 	for len(queue) != 0 {
 		q := queue[0]
 		queue = queue[1:]
+		if q == nil {
+			return errors.New("Nil Panic")
+		}
+		//为这个节点的所有子节点创建失效指针
 		for i := 0; i < 26; i++ {
+			//tmp是q的子节点
 			tmp := q.Child[i]
 			if tmp == nil {
 				continue
 			}
 			// 如果为根节点则FailPtr为自己
-			if tmp == root {
+			if q.data == '/' {
 				tmp.FailPtr = root
 			} else {
-				ttmp := tmp.FailPtr
-				for ttmp != nil {
-					ttmpC := ttmp.Child[tmp.data-'a']
-					if ttmpC != nil {
-						tmp.FailPtr = ttmpC
+				//先将失效指针指向root
+				tmp.FailPtr = root
+				// 找到q的失效指针
+				qFailPtr := q.FailPtr
+				for qFailPtr != nil {
+					qFailPtrChild := qFailPtr.Child[tmp.data-'a']
+					// 如果找到字符
+					if qFailPtrChild != nil {
+						tmp.FailPtr = qFailPtrChild
 						break
 					}
-					ttmpC = ttmpC.FailPtr
-				}
-				if ttmp == nil {
-					tmp.FailPtr = root
+					//没有找到就继续找
+					qFailPtr = qFailPtr.FailPtr
 				}
 			}
+			// 将子节点压入队列
 			queue = append(queue, tmp)
 		}
 	}
 	return
 }
+
+func (p *AcNode) MatchString(str string) error {
+	for i := 0; i < len(str); i++ {
+
+	}
+	return nil
+}
 func main() {
 	ac := InitAcNode()
-	ac.AddString("abc")
-	ac.AddString("abd")
+	ac.AddString("abcd")
+	ac.AddString("bcd")
+	ac.AddString("c")
+	e := ac.ConstructFailNext()
+	fmt.Println(e)
+	fmt.Println(ac.FailPtr)
 	ac.LevelRange()
 }

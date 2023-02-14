@@ -25,6 +25,8 @@ type TireTree struct {
 
 #### AC自动机（多匹配）
 
+[🔗](https://www.cnblogs.com/sclbgw7/p/9260756.html)
+
 - 介绍
 ```
 案例：对用户输入进行敏感字检查，可以将敏感字提前生成一个tire树，然后对用户的输入进行匹配，

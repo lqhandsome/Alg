@@ -108,18 +108,40 @@ func (p *AcNode) ConstructFailNext() (e error) {
 }
 
 func (p *AcNode) MatchString(str string) error {
+	root := p
 	for i := 0; i < len(str); i++ {
+		// 无法匹配就找到一个可以与之匹配的节点
+		for p.Child[str[i]-'a'] == nil && p != root {
+			p = p.FailPtr
+		}
 
+		p = p.Child[str[i]-'a']
+		//从新匹配下一个
+		if p == nil {
+			p = root
+		}
+
+		//检测指针为结尾的路径是否是模式串& 看是否可以与失败指针所在的串匹配
+		tmp := p
+		for tmp != root {
+			if tmp.isEnd {
+				leftIndex := i - tmp.length + 1
+				fmt.Println("匹配到的字符串", str[leftIndex:i+1])
+			}
+			tmp = tmp.FailPtr
+		}
 	}
 	return nil
 }
 func main() {
 	ac := InitAcNode()
-	ac.AddString("abcd")
+
 	ac.AddString("bcd")
-	ac.AddString("c")
+	ac.AddString("cd")
+	ac.AddString("abcd")
 	e := ac.ConstructFailNext()
 	fmt.Println(e)
 	fmt.Println(ac.FailPtr)
 	ac.LevelRange()
+	fmt.Println(ac.MatchString("abcd"))
 }

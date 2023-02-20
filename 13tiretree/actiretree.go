@@ -64,6 +64,11 @@ func (p *AcNode) LevelRange() {
 
 // 构建失败指针
 func (p *AcNode) ConstructFailNext() (e error) {
+	//root 表示根节点
+	//q 要处理的节点
+	//tmp q的一个子节点
+	//qFailPtr q失败指针
+	//qFailPtrChild qFailPtr的子节点（用来看是否跟tmp匹配）
 	root := p
 	// 模拟队列
 	var queue []*AcNode
@@ -90,8 +95,8 @@ func (p *AcNode) ConstructFailNext() (e error) {
 				// 找到q的失效指针
 				qFailPtr := q.FailPtr
 				for qFailPtr != nil {
+					// 找到失败指针所在节点的子节点看是否存在
 					qFailPtrChild := qFailPtr.Child[tmp.data-'a']
-					// 如果找到字符
 					if qFailPtrChild != nil {
 						tmp.FailPtr = qFailPtrChild
 						break

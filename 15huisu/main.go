@@ -1,10 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	arr := [8]int{1, 2, 3, 4, 5, 6, 7, 8}
-	queue8(arr, 0, 0)
+	arr := [8]int{0, 1, 2, 3, 4, 5, 6, 7}
+	queue8(arr, 7, 7)
 }
 
 func queue8(arr [8]int, col, row int) {
@@ -26,13 +28,14 @@ func isOk(arr [8]int, col, row int) bool {
 }
 func print(queue [8]int) {
 	for i := 0; i < 8; i++ {
-		for j := 0; j <= 8; j++ {
+		for j := 0; j < 8; j++ {
 			if j == queue[i] {
-				fmt.Printf("Q")
+				fmt.Printf("Q\t")
 			} else {
-				fmt.Printf("* ")
+				fmt.Printf("*\t")
 			}
 		}
+		fmt.Println()
 		fmt.Println()
 	}
 }

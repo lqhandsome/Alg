@@ -4,26 +4,31 @@ import (
 	"fmt"
 )
 
-func main() {
-	arr := [8]int{0, 1, 2, 3, 4, 5, 6, 7}
-	queue8(arr, 0)
-}
+var (
+	count int
+)
+
+//func main() {
+//	arr := make([]int, 8)
+//	queue8(arr, 0)
+//	fmt.Println(count)
+//}
 
 /*
 row 行
 */
-func queue8(arr [8]int, row int) {
-	if row == 7 {
+func queue8(arr []int, row int) {
+	if row == 8 {
 		print(arr)
-		println("-------------")
+		count++
+		fmt.Println("-----------------")
 		return
 	}
 	for i := 0; i < 8; i++ {
 		//判断某一行某一列是否可以放入
 		if isOk(arr, i, row) {
 			arr[row] = i
-			row++
-			queue8(arr, row)
+			queue8(arr, row+1)
 		}
 	}
 }
@@ -33,7 +38,7 @@ func queue8(arr [8]int, row int) {
 col 列
 row 行
 */
-func isOk(arr [8]int, col, row int) bool {
+func isOk(arr []int, col, row int) bool {
 	// 左侧
 	leftUp := col - 1
 	// 右侧
@@ -59,7 +64,7 @@ func isOk(arr [8]int, col, row int) bool {
 	}
 	return true
 }
-func print(queue [8]int) {
+func print(queue []int) {
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 8; j++ {
 			if j == queue[i] {

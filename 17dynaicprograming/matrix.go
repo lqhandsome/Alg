@@ -81,14 +81,14 @@ func (p Matrix) Dyna() (minDist int) {
 	return statArr[p.End][p.End]
 }
 
-func main() {
-	data := make([][]int, 4)
-	data[0] = []int{1, 3, 5, 9}
-	data[1] = []int{2, 1, 3, 4}
-	data[2] = []int{5, 2, 6, 7}
-	data[3] = []int{6, 8, 4, 3}
-	matrix := InitMatrix(data, 0, 0, 3)
-	matrix.Find(0, 0, 0)
-	fmt.Println(MinDist, count)
-	fmt.Println(matrix.Dyna())
-}
+//func main() {
+//	data := make([][]int, 4)
+//	data[0] = []int{1, 3, 5, 9}
+//	data[1] = []int{2, 1, 3, 4}
+//	data[2] = []int{5, 2, 6, 7}
+//	data[3] = []int{6, 8, 4, 3}
+//	matrix := InitMatrix(data, 0, 0, 3)
+//	matrix.Find(0, 0, 0)
+//	fmt.Println(MinDist, count)
+//	fmt.Println(matrix.Dyna())
+//}

@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+type a = int
+
 func main() {
 	graph := [...][]int{
 		{1, 3},
@@ -27,6 +29,7 @@ func main() {
 	g.AddEdge(6, 7)
 	fmt.Println(g.Data)
 	g.bfsTwo(0, 7)
+	g.dfs(0, 7)
 }
 
 // 邻接矩阵方式表示图(有向图)
@@ -129,9 +132,4 @@ func printPrev(s []int, key int) {
 		return
 	}
 	printPrev(s, s[key])
-}
-
-// 深度优先搜索
-func (p *Graph) dfs(s, t int) {
-
 }

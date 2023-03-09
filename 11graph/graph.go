@@ -27,7 +27,6 @@ func main() {
 	g.AddEdge(4, 6)
 	g.AddEdge(5, 7)
 	g.AddEdge(6, 7)
-	fmt.Println(g.Data)
 	g.bfsTwo(0, 7)
 	g.dfs(0, 7)
 }
@@ -49,7 +48,6 @@ func InitGraph(v uint) *Graph {
 func (p *Graph) AddEdge(s, t int) error {
 	if p == nil || p.Data == nil {
 		panic("not init")
-		fmt.Println("not init")
 		return fmt.Errorf("not init")
 	}
 	p.Data[s] = append(p.Data[s], t)
@@ -114,10 +112,6 @@ func (p *Graph) bfsTwo(t, s int) {
 			prev[p.Data[tmpT][i]] = tmpT
 			visited[p.Data[tmpT][i]] = true
 			if p.Data[tmpT][i] == s {
-				fmt.Print(s)
-				fmt.Println(queue)
-				fmt.Println(prev)
-				printPrev(prev, s)
 				return
 			}
 			queue = append(queue, p.Data[tmpT][i])

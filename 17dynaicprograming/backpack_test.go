@@ -33,3 +33,37 @@ func BenchmarkBackpackDya(b *testing.B) {
 		backpackDya(status, items, len(items), 100)
 	}
 }
+
+func BenchmarkEditDistanceHuiSu(b *testing.B) {
+	st1 = "aaaaabcd"
+	st2 = "abce"
+	ijDist = make([][]int, len(st2))
+	for k, _ := range ijDist {
+		ijDist[k] = make([]int, len(st1))
+	}
+	for i := 0; i < b.N; i++ {
+		lwstBT(st2, 0, len(st2), st1, 0, len(st1), 0)
+	}
+}
+
+func BenchmarkEditDistanceHuiSuFilter(b *testing.B) {
+
+	for i := 0; i < b.N; i++ {
+		lwstBTNoFilter(st2, 0, len(st2), st1, 0, len(st1), 0)
+	}
+}
+
+func BenchmarkEditDistanceHuiSuTwo(b *testing.B) {
+	st1 = "aaaaabcd"
+	st2 = "abce"
+
+	for i := 0; i < b.N; i++ {
+		b.StopTimer()
+		ijDist = make([][]int, len(st2))
+		for k, _ := range ijDist {
+			ijDist[k] = make([]int, len(st1))
+		}
+		b.StartTimer()
+		lwstBT(st2, 0, len(st2), st1, 0, len(st1), 0)
+	}
+}

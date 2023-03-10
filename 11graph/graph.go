@@ -5,17 +5,17 @@ import "fmt"
 type a = int
 
 func main() {
-	graph := [...][]int{
-		{1, 3},
-		{0, 2, 4},
-		{1, 5},
-		{0, 4},
-		{1, 3, 5, 6},
-		{2, 4, 7},
-		{4, 7},
-		{5, 6},
-	}
-	fmt.Println(graph)
+	//graph := [...][]int{
+	//	{1, 3},
+	//	{0, 2, 4},
+	//	{1, 5},
+	//	{0, 4},
+	//	{1, 3, 5, 6},
+	//	{2, 4, 7},
+	//	{4, 7},
+	//	{5, 6},
+	//}
+	//fmt.Println(graph)
 	g := InitGraph(10)
 	g.AddEdge(0, 1)
 	g.AddEdge(0, 3)
@@ -27,7 +27,11 @@ func main() {
 	g.AddEdge(4, 6)
 	g.AddEdge(5, 7)
 	g.AddEdge(6, 7)
-	g.bfsTwo(0, 7)
+	g.bfs(0, 7)
+	fmt.Println("-----------")
+	g.bfsRange(0)
+	fmt.Println()
+	fmt.Println("-----------")
 	g.dfs(0, 7)
 }
 
@@ -55,11 +59,8 @@ func (p *Graph) AddEdge(s, t int) error {
 	return nil
 }
 
-// 广度优先搜索
-func (p *Graph) bfs(t, s int) {
-	if t == s {
-		return
-	}
+// 广度优先遍历
+func (p *Graph) bfsRange(t int) {
 	var queue []int
 	visited := make(map[int]bool, p.V)
 	queue = append(queue, t)
@@ -74,18 +75,13 @@ func (p *Graph) bfs(t, s int) {
 		visited[tmpT] = true
 		fmt.Print(tmpT)
 		for i := 0; i < len(p.Data[tmpT]); i++ {
-			if p.Data[tmpT][i] == s {
-				fmt.Print(s)
-				fmt.Print(queue)
-				return
-			}
 			queue = append(queue, p.Data[tmpT][i])
 		}
 	}
 }
 
 // 广度优先搜索
-func (p *Graph) bfsTwo(t, s int) {
+func (p *Graph) bfs(t, s int) {
 	if t == s {
 		return
 	}
@@ -104,7 +100,6 @@ func (p *Graph) bfsTwo(t, s int) {
 	for len(queue) > 0 {
 		tmpT := queue[0]
 		queue = queue[1:]
-		fmt.Print(tmpT)
 		for i := 0; i < len(p.Data[tmpT]); i++ {
 			if visited[p.Data[tmpT][i]] {
 				continue
@@ -112,6 +107,7 @@ func (p *Graph) bfsTwo(t, s int) {
 			prev[p.Data[tmpT][i]] = tmpT
 			visited[p.Data[tmpT][i]] = true
 			if p.Data[tmpT][i] == s {
+				printPrev(prev, s)
 				return
 			}
 			queue = append(queue, p.Data[tmpT][i])
@@ -121,9 +117,11 @@ func (p *Graph) bfsTwo(t, s int) {
 
 // 打印路径
 func printPrev(s []int, key int) {
-	fmt.Println(key)
+
 	if s[key] == -1 {
+
 		return
 	}
 	printPrev(s, s[key])
+	fmt.Println(key)
 }

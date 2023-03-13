@@ -35,7 +35,7 @@ func main() {
 	g.dfs(0, 7)
 }
 
-// 邻接矩阵方式表示图(有向图)
+// 邻接矩阵方式表示图(无向图)
 type Graph struct {
 	V    uint          // 定点数
 	Data map[int][]int // 保存数据

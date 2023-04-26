@@ -1,93 +1,60 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
-type Graph struct {
-	V    uint                // 顶点数
-	Data map[string][]string // 保存节点值
-}
+func maxSumTwoNoOverlap(nums []int, firstLen int, secondLen int) int {
 
-func InitGraph(v uint) *Graph {
-	return &Graph{
-		V:    v,
-		Data: make(map[string][]string, v),
+	// 长子串
+	var maxLen int = firstLen
+	// 短子串
+	var minLen int = secondLen
+	if firstLen < secondLen {
+		maxLen = secondLen
+		minLen = firstLen
 	}
-}
-
-// t依赖于s，添加一条s->t的边
-func (p *Graph) AddEdge(s, t string) error {
-	if p == nil {
-		fmt.Println("graph not init")
-
-		return fmt.Errorf("graph not init")
-	}
-
-	if s == "" || t == "" {
-		fmt.Println("s or t is empty")
-
-		return fmt.Errorf("s or t is empty")
-	}
-
-	p.Data[s] = append(p.Data[s], t)
-	return nil
-}
-
-func (p *Graph) TopSort() error {
-	if len(p.Data) == 0 {
-		return nil
-	}
-
-	// 计算每个顶点的入度
-	inEdge := make(map[string]uint, p.V)
-	for k, v := range p.Data {
-		if inEdge[k] == 0 {
-			inEdge[k] = 0
-		}
-
-		for _, vv := range v {
-			inEdge[vv]++
+	// 长子串index
+	var maxIndex, i int
+	for ; i <= len(nums)-maxLen; i++ {
+		if getSum(nums, i, maxLen) > getSum(nums, maxIndex, maxLen) {
+			maxIndex = i
 		}
 	}
 
-	fmt.Println("inEdge", inEdge)
-
-	//模拟队列
-	var edgeZeroQueue []string
-	for k, v := range inEdge {
-		if v == 0 {
-			edgeZeroQueue = append(edgeZeroQueue, k)
-		}
+	var j int
+	if maxIndex+maxLen > j+minLen && j+minLen > maxIndex {
+		j = maxIndex + maxLen
 	}
 
-	for len(edgeZeroQueue) > 0 {
-		tmpEdgeZero := edgeZeroQueue[0]
-		edgeZeroQueue = edgeZeroQueue[1:]
+	//	短子串index
+	var minIndex int = j
+	for j <= len(nums)-minLen {
 
-		// print
-		fmt.Print(tmpEdgeZero, "->")
-		// 将所有依赖tmpEdgeZero 的顶点-1
-		for _, v := range p.Data[tmpEdgeZero] {
-			inEdge[v]--
-			if inEdge[v] == 0 {
-				edgeZeroQueue = append(edgeZeroQueue, v)
-			}
+		if maxIndex+maxLen > j+minLen && j+minLen > maxIndex {
+			j = maxIndex + maxLen
+			j++
+			continue
 		}
+		if getSum(nums, j, minLen) > getSum(nums, minIndex, minLen) {
+			minIndex = j
+		}
+		j++
 	}
-	return nil
+	fmt.Printf("max: %v,min: %v\r\n", maxIndex, minIndex)
+	return getSum(nums, maxIndex, maxLen) + getSum(nums, minIndex, minLen)
 }
+
+func getSum(num []int, index int, len int) int {
+	var sum int
+	for len > 0 {
+		sum += num[index]
+		index++
+		len--
+	}
+	return sum
+}
+
 func main() {
-	graph := InitGraph(5)
-	e := graph.AddEdge("a", "b")
-	e = graph.AddEdge("b", "c")
-	e = graph.AddEdge("c", "d")
-	e = graph.AddEdge("e", "f")
-	e = graph.AddEdge("d", "e")
+	arr := []int{8, 20, 6, 2, 20, 17, 6, 3, 20, 8, 12}
 
-	if e != nil {
-		panic(e)
-	}
-	fmt.Println(graph.Data)
-	graph.TopSort()
+	fmt.Println(maxSumTwoNoOverlap(arr, 5, 4))
 }

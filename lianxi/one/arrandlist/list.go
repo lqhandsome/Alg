@@ -97,3 +97,16 @@ func reversalList(head *Node) *Node {
 	}
 	return pre
 }
+
+// midList 求链表的中间节点
+func midList(head *Node) *Node {
+	if head == nil {
+		return nil
+	}
+	fast, slow := head, head
+	for fast != nil && fast.Next != nil {
+		fast = fast.Next.Next
+		slow = slow.Next
+	}
+	return slow
+}

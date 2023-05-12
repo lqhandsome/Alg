@@ -12,18 +12,6 @@ type ArrStack struct {
 	tail uint // 栈尾
 	cap  uint
 }
-type Node struct {
-	Data string
-	Next *Node // 下一个节点
-}
-
-// ListStack 循环栈
-type ListStack struct {
-	data *Node
-	head *Node
-	tail *Node
-	cap  uint
-}
 
 // InitArrStack 初始化数组为储存的顺序栈
 func InitArrStack(cap uint) *ArrStack {

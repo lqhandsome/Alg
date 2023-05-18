@@ -32,3 +32,11 @@ func Test_QuickSort(t *testing.T) {
 	QuickSort(arr, 0, len(arr)-1)
 	log.Info(arr)
 }
+
+func Test_MergeSort(t *testing.T) {
+
+	arr1 := []uint{10, 22, 4}
+
+	log.Info(mergeSort(arr1))
+
+}

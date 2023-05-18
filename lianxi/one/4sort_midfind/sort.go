@@ -80,3 +80,50 @@ func QuickSort(arr []uint, l, r int) {
 	QuickSort(arr, l, left-1)
 	QuickSort(arr, left+1, r)
 }
+
+// mergeSort 归并排序
+func mergeSort(arr []uint) []uint {
+
+	if len(arr) < 2 {
+		return arr
+	}
+	arr = sort(arr)
+	return arr
+}
+
+func sort(arr []uint) []uint {
+
+	if len(arr) <= 1 {
+		return arr
+	}
+	mid := len(arr) / 2
+	a1 := sort(arr[0:mid])
+	a2 := sort(arr[mid:])
+	return mergeArr(a1, a2)
+}
+
+// mergeArr 合并两个有序数组
+func mergeArr(arr1 []uint, arr2 []uint) []uint {
+
+	var sumArr []uint
+	for len(arr1) > 0 && len(arr2) > 0 {
+
+		if arr1[0] < arr2[0] {
+			sumArr = append(sumArr, arr1[0])
+			arr1 = append(arr1[:0], arr1[1:]...)
+		} else {
+			sumArr = append(sumArr, arr2[0])
+			arr2 = append(arr2[:0], arr2[1:]...)
+		}
+	}
+
+	if len(arr1) > 0 {
+		sumArr = append(sumArr, arr1...)
+	}
+
+	if len(arr2) > 0 {
+		sumArr = append(sumArr, arr2...)
+	}
+
+	return sumArr
+}

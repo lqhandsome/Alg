@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	log "github.com/sirupsen/logrus"
+	"runtime/debug"
+	"time"
+)
 
 func maxSumTwoNoOverlap(nums []int, firstLen int, secondLen int) int {
 
@@ -54,7 +59,12 @@ func getSum(num []int, index int, len int) int {
 }
 
 func main() {
-	arr := []int{8, 20, 6, 2, 20, 17, 6, 3, 20, 8, 12}
-
-	fmt.Println(maxSumTwoNoOverlap(arr, 5, 4))
+	log.Info(debug.SetMaxThreads(5))
+	go func() {
+		time.Sleep(time.Hour)
+	}()
+	go func() {
+		time.Sleep(time.Hour)
+	}()
+	select {}
 }

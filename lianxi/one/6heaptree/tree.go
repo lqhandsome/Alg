@@ -45,6 +45,26 @@ func (p *tree) Add(data int) error {
 	return nil
 }
 
+func (p *tree) Search(data int) bool {
+	if p == nil {
+
+		return false
+	}
+
+	tmp := p
+	for tmp != nil {
+		if tmp.data == data {
+			return true
+		} else if tmp.data > data {
+			tmp = tmp.left
+		} else {
+			tmp = tmp.right
+		}
+	}
+
+	return false
+}
+
 // LevelRange 层序遍历打印
 func (p *tree) LevelRange() {
 	tmp := p
@@ -64,4 +84,18 @@ func (p *tree) LevelRange() {
 			queue = append(queue, tmpQueue.right)
 		}
 	}
+}
+
+func (p *tree) Delete(data string) error {
+
+	if p == nil {
+
+		return fmt.Errorf("%s", "tree not init")
+	}
+
+	// 删除的节点没有子节点
+
+	//删除的节点只有一个节点
+	//删除的节点有两个节点
+	return nil
 }

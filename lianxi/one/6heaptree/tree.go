@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	log "github.com/sirupsen/logrus"
+)
 
 // tree 二叉查找树
 type tree struct {
@@ -84,6 +87,37 @@ func (p *tree) LevelRange() {
 			queue = append(queue, tmpQueue.right)
 		}
 	}
+}
+
+// PreRange 先序遍历二叉树
+func beforeRange(root *tree) {
+	if root == nil {
+		return
+	}
+	log.Info(root.data)
+	beforeRange(root.left)
+	beforeRange(root.right)
+}
+
+// afterRange 二叉树后序遍历
+func afterRange(root *tree) {
+	if root == nil {
+		return
+	}
+	afterRange(root.left)
+	afterRange(root.right)
+	log.Info(root.data)
+}
+
+// midRange 二叉树中序遍历
+func midRange(root *tree) {
+	if root == nil {
+		return
+	}
+
+	midRange(root.left)
+	log.Info(root.data)
+	midRange(root.right)
 }
 
 func (p *tree) Delete(data string) error {

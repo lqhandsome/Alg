@@ -14,6 +14,9 @@ func TestInit(t *testing.T) {
 	tr.Add(8)
 	tr.Add(5)
 	tr.LevelRange()
+	beforeRange(tr)
+	afterRange(tr)
+	midRange(tr)
 }
 
 func TestTreeSearch(t *testing.T) {

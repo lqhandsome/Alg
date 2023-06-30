@@ -6,7 +6,7 @@ import (
 )
 
 func TestHeap(t *testing.T) {
-	h := New(10)
+	h := New(6)
 	log.Info(h.add(10))
 	log.Info(h.add(30))
 	log.Info(h.add(44))
@@ -15,4 +15,10 @@ func TestHeap(t *testing.T) {
 	log.Info(h.add(7))
 	log.Info(h.add(7))
 	log.Info(h.data)
+
+	h.deleteData(10)
+	h.deleteData(7)
+	log.Info(h.add(7))
+	log.Info(h.data)
+
 }

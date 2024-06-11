@@ -17,7 +17,7 @@ func newBinaryFindTree(data int) *BinaryFindTree {
 	}
 }
 
-func main() {
+func mainn() {
 	root := newBinaryFindTree(7)
 	fmt.Println(root.AddNode(&BinaryFindTree{
 		Data: 10,
@@ -116,7 +116,7 @@ func (root *BinaryFindTree) FindNode(data int) (*BinaryFindTree, error) {
 	}
 }
 
-//二叉查找树的删除
+// 二叉查找树的删除
 func DeleteNode(root *BinaryFindTree, data int) (*BinaryFindTree, error) {
 
 	if root == nil {

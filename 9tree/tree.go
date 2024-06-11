@@ -10,56 +10,56 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-//func main() {
-//	a := &TreeNode{
-//		Data: "A",
-//	}
-//	b := &TreeNode{
-//		Data: "B",
-//	}
-//	c := &TreeNode{
-//		Data: "C",
-//	}
-//	d := &TreeNode{
-//		Data: "D",
-//	}
-//	e := &TreeNode{
-//		Data: "E",
-//	}
-//	f := &TreeNode{
-//		Data: "F",
-//	}
-//	g := &TreeNode{
-//		Data: "G",
-//	}
-//	a.Left = b
-//	a.Right = c
-//	b.Left = d
-//	b.Right = e
-//	c.Left = f
-//	c.Right = g
-//
-//	//a.PreOrderTraversal()
-//	fmt.Print("先序遍历")
-//	PreOrderTraversal(a)
-//	fmt.Println()
-//	fmt.Print("中序遍历")
-//	InOrderTraversal(a)
-//	fmt.Println()
-//	fmt.Print("后序遍历")
-//	PostOrderTraversal(a)
-//	fmt.Println()
-//	fmt.Print("非递归前序遍历")
-//	beforeRangeTree(a)
-//	fmt.Println()
-//	fmt.Print("非递归后续遍历")
-//	afterRangeTree(a)
-//	fmt.Println()
-//	fmt.Print("非递归层续遍历")
-//	levelRangeTree(a)
-//}
+func main() {
+	a := &TreeNode{
+		Data: "A",
+	}
+	b := &TreeNode{
+		Data: "B",
+	}
+	c := &TreeNode{
+		Data: "C",
+	}
+	d := &TreeNode{
+		Data: "D",
+	}
+	e := &TreeNode{
+		Data: "E",
+	}
+	f := &TreeNode{
+		Data: "F",
+	}
+	g := &TreeNode{
+		Data: "G",
+	}
+	a.Left = b
+	a.Right = c
+	b.Left = d
+	b.Right = e
+	c.Left = f
+	c.Right = g
 
-//前序非递归遍历二叉树
+	//a.PreOrderTraversal()
+	fmt.Print("先序遍历")
+	PreOrderTraversal(a)
+	fmt.Println()
+	fmt.Print("中序遍历")
+	InOrderTraversal(a)
+	fmt.Println()
+	fmt.Print("后序遍历")
+	PostOrderTraversal(a)
+	fmt.Println()
+	fmt.Print("非递归前序遍历")
+	beforeRangeTree(a)
+	fmt.Println()
+	fmt.Print("非递归后续遍历")
+	afterRangeTree(a)
+	fmt.Println()
+	fmt.Print("非递归层续遍历")
+	levelRangeTree(a)
+}
+
+// 前序非递归遍历二叉树
 func beforeRangeTree(tree *TreeNode) {
 	if tree == nil {
 		return
@@ -155,7 +155,7 @@ func (p *TreeNode) PreOrderTraversal() {
 	}
 }
 
-//先序遍历
+// 先序遍历
 func PreOrderTraversal(tree *TreeNode) {
 	if tree != nil {
 		fmt.Print(tree.Data, "-->")
@@ -164,7 +164,7 @@ func PreOrderTraversal(tree *TreeNode) {
 	}
 }
 
-//中序遍历
+// 中序遍历
 func InOrderTraversal(tree *TreeNode) {
 	if tree != nil {
 		InOrderTraversal(tree.Left)
@@ -173,7 +173,7 @@ func InOrderTraversal(tree *TreeNode) {
 	}
 }
 
-//后序遍历
+// 后序遍历
 func PostOrderTraversal(tree *TreeNode) {
 	if tree != nil {
 		PostOrderTraversal(tree.Left)

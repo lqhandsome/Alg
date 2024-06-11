@@ -32,7 +32,7 @@ func main() {
 	g.bfsRange(0)
 	fmt.Println()
 	fmt.Println("-----------")
-	g.dfs(0, 7)
+	g.dfs(1, 7)
 }
 
 // 邻接矩阵方式表示图(无向图)

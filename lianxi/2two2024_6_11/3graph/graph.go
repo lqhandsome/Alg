@@ -52,7 +52,7 @@ func (g *graph) bfs(s, t int) {
 				return
 			}
 
-			visited[tmp] = true
+			visited[value] = true
 
 		}
 	}

@@ -2,6 +2,8 @@ package graph
 
 import log "github.com/sirupsen/logrus"
 
+var found bool
+
 // graph 无向无权图
 type graph struct {
 	v    uint
@@ -56,6 +58,42 @@ func (g *graph) bfs(s, t int) {
 
 		}
 	}
+}
+
+func (g *graph) dfs(s, t int) {
+	if s == t {
+		return
+	}
+
+	visited := make(map[int]bool, g.v)
+	prev := make([]int, g.v+1)
+	for key, _ := range prev {
+		prev[key] = -1
+	}
+	visited[s] = true
+	g.dfsHandle(visited, prev, s, s, t)
+}
+
+func (g *graph) dfsHandle(visited map[int]bool, prev []int, ss, s, t int) {
+	if found {
+		return
+	}
+
+	for _, value := range g.data[s] {
+		if visited[value] {
+			continue
+		}
+
+		prev[value] = s
+		visited[value] = true
+		if t == value {
+			found = true
+			printPrev(ss, t, prev)
+		}
+
+		g.dfsHandle(visited, prev, ss, value, t)
+	}
+
 }
 
 func printPrev(s, t int, prev []int) {

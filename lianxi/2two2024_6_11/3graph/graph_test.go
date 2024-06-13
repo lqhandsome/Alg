@@ -22,5 +22,9 @@ func TestMain(m *testing.M) {
 }
 
 func Test_BFS(t *testing.T) {
-	g.bfs(1, 7)
+	g.bfs(4, 1)
+}
+
+func Test_dfs(t *testing.T) {
+	g.dfs(5, 7)
 }

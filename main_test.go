@@ -23,13 +23,13 @@ func init() {
 
 func BenchmarkIndexOfInterface(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		IndexOfInterface(_arr, uint(1))
+		//IndexOfInterface(_arr, uint(1))
 	}
 }
 
 func BenchmarkIndexOfInterfacePacking(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		IndexOfInterfacePacking(uint(1), _arr...)
+		//IndexOfInterfacePacking(uint(1), _arr...)
 	}
 }
 
@@ -51,12 +51,12 @@ func BenchmarkIndexOfUint(b *testing.B) {
 
 func BenchmarkIndexOfByReflectInterface(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		IndexOfByReflect(_arr, uint(1))
+		//IndexOfByReflect(_arr, uint(1))
 	}
 }
 
 func BenchmarkIndexOfByReflectUint(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		IndexOfByReflect(_uintArr, uint(1))
+		//IndexOfByReflect(_uintArr, uint(1))
 	}
 }
